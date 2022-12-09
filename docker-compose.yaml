@@ -13,7 +13,7 @@ services:
       - /var/lib/docker/volumes/devops-project-volume/_data:/var/lib/mysql
 
   backend-app:
-    image: karimkhammassi/my-repo:spring-app-1.0
+    image: hedighodhbane/my-repo:spring-app-1.0
     restart: on-failure
     depends_on:
       - mysql_db
