@@ -1,0 +1,7 @@
+pet:
+  - id: 1
+    name: "pet 1"
+    description: "the description of pet 1"
+  - id: 2
+    name: "pet 2"
+    description: "the description of pet 2"

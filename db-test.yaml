@@ -1,0 +1,17 @@
+# This yaml file is used to run the database before running the application for testing
+version: '3'
+
+services:
+
+  mysql_db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQLDB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQLDB_DATABASE}
+    ports:
+      - ${MYSQLDB_LOCAL_PORT}:${MYSQLDB_DOCKER_PORT}
+    volumes:
+      - pet-store-volume:/var/lib/mysql
+
+volumes:
+  pet-store-volume:
