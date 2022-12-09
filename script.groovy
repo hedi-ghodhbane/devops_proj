@@ -2,9 +2,9 @@
 def buildImage() {
     echo "building the docker image..."
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-        sh "docker build -t karimkhammassi/my-repo:spring-app-${IMAGE_NAME} ."
+        sh "docker build -t hedighodhbane/my-repo:spring-app-${IMAGE_NAME} ."
         sh "echo $PASS | docker login -u $USER --password-stdin"
-        sh "docker push karimkhammassi/my-repo:spring-app-${IMAGE_NAME}"
+        sh "docker push hedighodhbane/my-repo:spring-app-${IMAGE_NAME}"
     }
 }
 
@@ -17,9 +17,9 @@ def sonarScan(String serverIp, String serverUser) {
     echo "Running sonarQube scan..."
     def runSonar = '"export MYSQLDB_ROOT_PASSWORD=karim MYSQLDB_DATABASE=pet_store MYSQLDB_LOCAL_PORT=3306 MYSQLDB_DOCKER_PORT=3306 && bash runSonarQube.sh"'
     sh "docker exec -it sonarQube-container bash -c ${runSonar}"
-    // sshagent (credentials: ['sonar-server']) {
-    //     sh "ssh -o StrictHostKeyChecking=no ${serverUser}@${serverIp} ${runSonar}"
-    // }
+    sshagent (credentials: ['sonar-server']) {
+        sh "ssh -o StrictHostKeyChecking=no ${serverUser}@${serverIp} ${runSonar}"
+    }
     }
 
 def deployApp(String serverIp, String serverUser) {
